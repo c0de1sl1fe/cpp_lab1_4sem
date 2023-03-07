@@ -21,6 +21,18 @@ private:
 	};
 	Node* root;
 
+	Node* insert_(Node* root, int value)
+	{
+		if (!root)
+		{
+			root = new Node(value);
+		}
+
+	}
+
+
+
+
 public:
 	set(const set& a);
 	~set();
@@ -36,3 +48,15 @@ bool set::insert(int key)
 {
 
 }
+bool set::contains
+(int key)
+{
+
+}
+
+
+bool set::erase(int key)
+{
+
+}
+
