@@ -29,8 +29,31 @@ private:
 		}
 
 	}
+	void clear_(Node* root)
+	{
+		if (!root)
+		{
+			return;
+		}
+		clear_(root->left);
+		clear_(root->right);
+		delete root;
+	}
+	void print_(const std::string& prefix, const Node* node, bool isLeft)
+	{
+		if (node != nullptr)
+		{
+			std::cout << prefix;
+			std::cout << (isLeft ? "|--: " : "L--: ");
 
+			// print the value of the node
+			std::cout << node->data << std::endl;
 
+			// enter the next tree level - left and right branch
+			print_(prefix + (isLeft ? "|   " : "    "), node->left, true);
+			print_(prefix + (isLeft ? "|   " : "    "), node->right, false);
+		}
+	}
 
 
 public:
@@ -43,13 +66,29 @@ public:
 	bool erase(int key);
 
 };
-
-bool set::insert(int key)
+set::set(const set& a)
 {
 
 }
-bool set::contains
-(int key)
+set::~set()
+{
+	clear_(root);
+}
+set& set::operator=(const set& a)
+{
+
+}
+void set::print()
+{
+	print_("", root, false);
+}
+
+bool set::insert(int key)
+{
+	
+}
+
+bool set::contains(int key)
 {
 
 }
