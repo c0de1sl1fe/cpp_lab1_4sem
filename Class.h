@@ -100,7 +100,7 @@ private:
 	{
 
 	}
-	bool contains_(Node* root, int value)
+	Node* contains_(Node* root, int value)
 	{
 		if (!root)
 		{
@@ -116,7 +116,7 @@ private:
 		}
 		if (root->data == value)
 		{
-			return true;
+			return root;
 		}
 	}
 	
@@ -161,7 +161,7 @@ bool set::insert(int key)
 
 bool set::contains(int key)
 {
-	return contains_(root_, key);
+	return contains_(root_, key) ? true : false;
 }
 
 
