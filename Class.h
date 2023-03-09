@@ -13,13 +13,13 @@ private:
 		int data;
 		Node* left; 
 		Node* right;
-		Node(int value)
+		Node(int value = 0)
 		{
 			data = value;
 			left = right = NULL;
 		}
 	};
-	Node* root;
+	Node* root_;
 
 	Node* insert_(Node* root, int value)
 	{
@@ -29,7 +29,7 @@ private:
 		}
 
 	}
-	void clear_(Node* root)
+	void clear_(Node*& root)
 	{
 		if (!root)
 		{
@@ -38,6 +38,7 @@ private:
 		clear_(root->left);
 		clear_(root->right);
 		delete root;
+		root = NULL;
 	}
 	void print_(const std::string& prefix, const Node* node, bool isLeft)
 	{
@@ -54,48 +55,87 @@ private:
 			print_(prefix + (isLeft ? "|   " : "    "), node->right, false);
 		}
 	}
-
+	void copy_(Node*& dst, const Node* src)
+	{
+		if (!src)
+		{
+			dst = NULL;
+			return;
+		}
+		dst = new Node(src->data);
+		copy_(dst->left, src->left);
+		copy_(dst->right, src->right);		
+	}
 
 public:
 	set(const set& a);
 	~set();
-	set& operator=(const set& a);
+	set& operator=(const set& src);
 	void print();
 	bool insert(int key);
 	bool contains(int key);
 	bool erase(int key);
 
 };
-set::set(const set& a)
+set::set(const set& src)
 {
-
+	root_ = NULL;
+	copy_(root_, src.root_);
 }
 set::~set()
 {
-	clear_(root);
+	clear_(root_);
 }
-set& set::operator=(const set& a)
+set& set::operator=(const set& src)
 {
-
+	if (this == (&src)) { return *this; }
+	if (!src.root_)
+	{
+		clear_(root_);
+	}
+	copy_(root_, src.root_);
+	return *this;
 }
 void set::print()
 {
-	print_("", root, false);
+	print_("", root_, false);
 }
 
 bool set::insert(int key)
 {
-	
+	return true;
 }
 
 bool set::contains(int key)
 {
-
+	return true;
 }
 
 
 bool set::erase(int key)
 {
-
+	return true;
 }
 
+
+class EClassException
+{
+protected:
+	char _err[256];
+public:
+	EClassException(const char* err);
+	virtual void Print();
+	virtual ~EClassException();
+};
+
+
+EClassException::EClassException(const char* err)
+{
+	strncpy_s(_err, err, 255);
+	_err[255] = 0;
+}
+void EClassException::Print()
+{
+	std::cout << _err << std::endl;
+}
+EClassException::~EClassException() {}
