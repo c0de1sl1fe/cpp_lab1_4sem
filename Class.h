@@ -21,23 +21,43 @@ private:
 	};
 	Node* root_;
 
-	Node* insert_(Node* root, int value)
+	//Node* insert_(Node* root, int value)
+	//{
+	//	if (!root)
+	//		return new Node(value);
+	//	if (value == root->data)
+	//	{
+	//		return NULL;
+	//	}
+	//	if (value > root->data)
+	//	{
+	//		root->right = insert_(root->right, value);
+	//	}
+	//	else
+	//	{
+	//		root->left = insert_(root->left, value);
+	//	}
+
+	//}
+	bool insert_(Node*& root, int value)
 	{
 		if (!root)
-			return new Node(value);
-		if (value == root->data)
 		{
-			return NULL;
+			root = new Node(value);
+			return true;
 		}
-		if (value > root->data)
+		if (root->data < value)
 		{
-			root->right = insert_(root->right, value);
+			insert_(root->right, value);
 		}
-		else
+		if (root->data > value)
 		{
-			root->left = insert_(root->left, value);
+			insert_(root->left, value);
 		}
-
+		if (root->data == value)
+		{
+			return false;
+		}
 	}
 	void clear_(Node*& root)
 	{
@@ -80,6 +100,25 @@ private:
 	{
 
 	}
+	bool contains_(Node* root, int value)
+	{
+		if (!root)
+		{
+			return false;
+		}
+		if (root->data < value)
+		{
+			contains_(root->right, value);
+		}
+		if (root->data > value)
+		{
+			contains_(root->left, value);
+		}
+		if (root->data == value)
+		{
+			return true;
+		}
+	}
 	
 public:
 	set(const set& a);
@@ -117,12 +156,12 @@ void set::print()
 
 bool set::insert(int key)
 {
-	return true;
+	return insert_(root_, key);
 }
 
 bool set::contains(int key)
 {
-	return true;
+	return contains_(root_, key);
 }
 
 
