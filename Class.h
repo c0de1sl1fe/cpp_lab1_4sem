@@ -24,8 +24,18 @@ private:
 	Node* insert_(Node* root, int value)
 	{
 		if (!root)
+			return new Node(value);
+		if (value == root->data)
 		{
-			root = new Node(value);
+			return NULL;
+		}
+		if (value > root->data)
+		{
+			root->right = insert_(root->right, value);
+		}
+		else
+		{
+			root->left = insert_(root->left, value);
 		}
 
 	}
@@ -66,7 +76,11 @@ private:
 		copy_(dst->left, src->left);
 		copy_(dst->right, src->right);		
 	}
+	void erase(Node*& root, int value)
+	{
 
+	}
+	
 public:
 	set(const set& a);
 	~set();
