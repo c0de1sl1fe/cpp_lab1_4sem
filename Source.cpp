@@ -3,7 +3,7 @@
 #include "Class.h"
 #include <stdio.h>
 
-void menu1()
+void printMenu()
 {
     system("cls");
     std::cout << "Hello! Choose one option:";
@@ -57,7 +57,8 @@ int EnterNumber()
     return (int)tmp;
 }
 
-void main()
+
+void test()
 {
     set test;
 
@@ -67,7 +68,21 @@ void main()
     test.insert(2);
 
     test.insert(5);
+    std::cout << test.contains(0) << std::endl;
+    set test1;
+    test1.insert(23);
+    test1 = test;
+    test1.print();
+}
 
+void main()
+{
+    test();
+    int choice = 0;
+    bool exit = false;
+    //while (!exti)
+    //{
+    //    printMenu();
 
-    test.print();
+    //}
 }

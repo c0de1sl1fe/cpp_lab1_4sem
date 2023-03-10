@@ -107,18 +107,19 @@ private:
 		{
 			return NULL;
 		}
-		if (root->data < value)
+		if (root->data == value)
 		{
-			contains_(root->right, value);
+			return root;
 		}
 		if (root->data > value)
 		{
 			contains_(root->left, value);
 		}
-		if (root->data == value)
+		else 
 		{
-			return root;
+			contains_(root->right, value);
 		}
+
 	}
 	
 public:
