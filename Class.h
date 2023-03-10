@@ -46,18 +46,21 @@ private:
 			root = new Node(value);
 			return true;
 		}
-		if (root->data < value)
-		{
-			insert_(root->right, value);
-		}
-		if (root->data > value)
-		{
-			insert_(root->left, value);
-		}
+
 		if (root->data == value)
 		{
 			return false;
 		}
+		if (root->data > value)
+		{
+			insert_(root->left, value);
+
+		}
+		else
+		{
+			insert_(root->right, value);
+		}
+
 	}
 	void clear_(Node*& root)
 	{
@@ -103,7 +106,7 @@ private:
 	{
 		if (!root)
 		{
-			return false;
+			return NULL;
 		}
 		if (root->data < value)
 		{

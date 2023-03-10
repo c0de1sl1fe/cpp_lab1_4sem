@@ -6,5 +6,8 @@
 
 void main()
 {
+    set test;
 
+    test.insert(3);
+    test.print();
 }
