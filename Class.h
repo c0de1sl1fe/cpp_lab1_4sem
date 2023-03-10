@@ -54,7 +54,6 @@ private:
 		if (root->data > value)
 		{
 			insert_(root->left, value);
-
 		}
 		else
 		{
