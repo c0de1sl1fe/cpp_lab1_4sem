@@ -68,11 +68,8 @@ void test()
     test.insert(2);
 
     test.insert(5);
-    std::cout << test.contains(0) << std::endl;
-    set test1;
-    test1.insert(23);
-    test1 = test;
-    test1.print();
+    std::cout << test.contains(7) << std::endl;
+
 }
 
 void main()

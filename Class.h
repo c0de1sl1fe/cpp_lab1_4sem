@@ -103,22 +103,34 @@ private:
 	}
 	Node* contains_(Node* root, int value)
 	{
-		if (!root)
-		{
-			return NULL;
+		while (root != NULL && root->data != value) {
+			if (value == root->data) {
+				return root;
+			}
+			else if (value < root->data) {
+				root = root->left;
+			}
+			else {
+				root = root->right;
+			}
 		}
-		if (root->data == value)
-		{
-			return root;
-		}
-		if (root->data > value)
-		{
-			contains_(root->left, value);
-		}
-		else 
-		{
-			contains_(root->right, value);
-		}
+		return root;
+		//if (!root)
+		//{
+		//	return NULL;
+		//}
+		//if (root->data == value)
+		//{
+		//	return root;
+		//}
+		//if (root->data > value)
+		//{
+		//	contains_(root->left, value);
+		//}
+		//else 
+		//{
+		//	contains_(root->right, value);
+		//}
 
 	}
 	
