@@ -120,6 +120,7 @@ private:
 	}
 	
 public:
+	set();
 	set(const set& a);
 	~set();
 	set& operator=(const set& src);
@@ -129,6 +130,11 @@ public:
 	bool erase(int key);
 
 };
+set::set()
+{
+	root_ = NULL;
+}
+
 set::set(const set& src)
 {
 	root_ = NULL;
