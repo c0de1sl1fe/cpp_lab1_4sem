@@ -75,8 +75,7 @@ private:
 		if (node != nullptr)
 		{
 			std::cout << prefix;
-			std::cout << (isLeft ? "|--: " : "L--: ");
-
+			std::cout << (isLeft ? "ÃÄÄ" : "ÀÄÄ");
 			// print the value of the node
 			std::cout << node->data << std::endl;
 
