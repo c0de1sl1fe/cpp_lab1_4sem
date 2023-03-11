@@ -39,6 +39,44 @@ private:
 	//	}
 
 	//}
+
+	Node* FindMin_(Node* root)
+	{
+		while (root->left != NULL) root = root->left;
+		return root;
+	}
+
+	Node* erase_(Node* root, int key) {
+		if (root == NULL) return root;
+		else if (key < root->data) root->left = erase_(root->left, key);
+		else if (key > root->data) root->right = erase_(root->right, key);
+		// Wohoo... I found you, Get ready to be deleted	
+		else {
+			// Case 1:  No child
+			if (root->left == NULL && root->right == NULL) {
+				delete root;
+				root = NULL;
+			}
+			//Case 2: One child 
+			else if (root->left == NULL) {
+				struct Node* temp = root;
+				root = root->right;
+				delete temp;
+			}
+			else if (root->right == NULL) {
+				struct Node* temp = root;
+				root = root->left;
+				delete temp;
+			}
+			// case 3: 2 children
+			else {
+				struct Node* temp = FindMin_(root->right);
+				root->data = temp->data;
+				root->right = erase_(root->right, temp->data);
+			}
+		}
+		return root;
+	}
 	bool insert_(Node*& root, int value)
 	{
 		if (!root)
@@ -97,10 +135,7 @@ private:
 		copy_(dst->left, src->left);
 		copy_(dst->right, src->right);		
 	}
-	void erase(Node*& root, int value)
-	{
 
-	}
 	Node* contains_(Node* root, int value)
 	{
 		while (root != NULL && root->data != value) {
@@ -186,6 +221,11 @@ bool set::contains(int key)
 
 bool set::erase(int key)
 {
+	if (!contains_(root_, key))
+	{
+		return false;
+	}
+	erase_(root_, key);
 	return true;
 }
 
