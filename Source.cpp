@@ -101,10 +101,38 @@ void main()
             system("pause");
             break;
         case(2):
+            std::cout << std::endl;
+            std::cout << "Are number contained in set: ";
+            key = EnterNumber();
+            if (tree.contains(key))
+            {
+                std::cout << "Yes, number " << key << " are contained in this set" << std::endl;
+            }
+            else
+            {
+                std::cout << "NO, number " << key << " aren' contained in this set" << std::endl;
+            }
 
+            tree.print();
+            system("pause");
             break;
         case(3):
+            tree.print();
+            std::cout << std::endl;
+            std::cout << "Let's erase: ";
+            key = EnterNumber();
+            if (tree.erase(key))
+            {
+                std::cout << "uccessfully erased" << std::endl;
+            }
+            else
+            {
+                std::cout << "something went wrong" << std::endl;
+            }
 
+            tree.print();
+            system("pause");
+            
             break;
         case(4):
 
