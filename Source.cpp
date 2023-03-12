@@ -132,7 +132,7 @@ void testFILLMySet(int numb, int rep)
         //    << duration.count() << " microseconds" << std::endl;
         res += duration.count();
     }
-    std::cout << "Time of FILL for " << numb << " for " << rep << " times: " << (double)res / rep << std::endl;
+    std::cout << "Time of FILL for " << numb << " for " << rep << " times: " << (double)res / rep << " microseconds" << std::endl;
 }
 
 void testContainsMySet(int numb, int rep)
@@ -142,18 +142,18 @@ void testContainsMySet(int numb, int rep)
     {
         test.insert(lcg());
     }
-    int res = 0;
+    long double res = 0;
     for (int j = 0; j < rep; j++)
     {
         auto start = high_resolution_clock::now();
         test.contains(lcg());
         auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
+        auto duration = duration_cast<nanoseconds>(stop - start);
         //std::cout << "Time taken by function: "
         //    << duration.count() << " microseconds" << std::endl;
         res += duration.count();
     }
-    std::cout << "Time of IS_CONTAINS for " << numb << " for " << rep << " times: " << (double)res / rep << std::endl;
+    std::cout << "Time of IS_CONTAINS for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
 }
 
 void testInsertMySet(int numb, int rep)
@@ -170,12 +170,12 @@ void testInsertMySet(int numb, int rep)
         auto start = high_resolution_clock::now();
         tmp.insert(lcg());
         auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
+        auto duration = duration_cast<nanoseconds>(stop - start);
         //std::cout << "Time taken by function: "
         //    << duration.count() << " microseconds" << std::endl;
         res += duration.count();
     }
-    std::cout << "Time of INSERT for " << numb << " for " << rep << " times: " << (double)res / rep << std::endl;
+    std::cout << "Time of INSERT for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
 }
 
 void testEraseMySet(int numb, int rep)
@@ -192,12 +192,12 @@ void testEraseMySet(int numb, int rep)
         auto start = high_resolution_clock::now();
         tmp.erase(lcg());
         auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
+        auto duration = duration_cast<nanoseconds>(stop - start);
         //std::cout << "Time taken by function: "
         //    << duration.count() << " microseconds" << std::endl;
         res += duration.count();
     }
-    std::cout << "Time of ERASE for " << numb << " for " << rep << " times: " << (double)res / rep << std::endl;
+    std::cout << "Time of ERASE for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
 }
 
 
@@ -310,6 +310,27 @@ void main()
         }
         case(5):
             std::cout << "Bye!" << std::endl;
+            testFILLMySet(1000, 100);
+            testFILLMySet(10000, 100);
+            testFILLMySet(100000, 100);
+
+            std::cout << std::endl;
+
+            testContainsMySet(1000, 1000);
+            testContainsMySet(10000, 1000);
+            testContainsMySet(100000, 1000);
+
+            std::cout << std::endl;
+
+            testInsertMySet(1000, 1000);
+            testInsertMySet(10000, 1000);
+            testInsertMySet(100000, 1000);
+
+            std::cout << std::endl;
+
+            testEraseMySet(1000, 1000);
+            testEraseMySet(10000, 1000);
+            testEraseMySet(100000, 1000);
 
             exit = true;
             break;
