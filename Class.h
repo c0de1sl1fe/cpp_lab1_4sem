@@ -22,26 +22,6 @@ class set
 private:
 
 	Node* root_;
-
-	//Node* insert_(Node* root, int value)
-	//{
-	//	if (!root)
-	//		return new Node(value);
-	//	if (value == root->data)
-	//	{
-	//		return NULL;
-	//	}
-	//	if (value > root->data)
-	//	{
-	//		root->right = insert_(root->right, value);
-	//	}
-	//	else
-	//	{
-	//		root->left = insert_(root->left, value);
-	//	}
-
-	//}
-
 	Node* FindMin_(Node* root)
 	{
 		while (root->left != NULL) root = root->left;
@@ -52,7 +32,6 @@ private:
 		if (root == NULL) return root;
 		else if (key < root->data) root->left = erase_(root->left, key);
 		else if (key > root->data) root->right = erase_(root->right, key);
-		// Wohoo... I found you, Get ready to be deleted	
 		else {
 			// Case 1:  No child
 			if (root->left == NULL && root->right == NULL) {
@@ -93,11 +72,11 @@ private:
 		}
 		if (root->data > value)
 		{
-			insert_(root->left, value);
+			return (root->left, value);
 		}
 		else
 		{
-			insert_(root->right, value);
+			return insert_(root->right, value);
 		}
 
 	}
@@ -137,7 +116,6 @@ private:
 		copy_(dst->left, src->left);
 		copy_(dst->right, src->right);		
 	}
-
 	Node* contains_(Node* root, int value) const
 	{
 		while (root != NULL && root->data != value) {
@@ -152,22 +130,6 @@ private:
 			}
 		}
 		return root;
-		//if (!root)
-		//{
-		//	return NULL;
-		//}
-		//if (root->data == value)
-		//{
-		//	return root;
-		//}
-		//if (root->data > value)
-		//{
-		//	contains_(root->left, value);
-		//}
-		//else 
-		//{
-		//	contains_(root->right, value);
-		//}
 	}
 	
 public:
@@ -179,9 +141,9 @@ public:
 	bool insert(int key);
 	bool contains(int key) const;
 	bool erase(int key);
-	Node* getRoot() const;
+	Node* const getRoot() const;
 };
-Node* set::getRoot() const
+Node* const set::getRoot() const
 {
 	return root_;
 }

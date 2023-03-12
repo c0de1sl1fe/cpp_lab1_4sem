@@ -102,35 +102,20 @@ set difference(const set lhs, const set rhs)
     return difference(lhs.getRoot(), rhs, result);
 }
 
-void test()
-{
-    set test;
-    test.insert(6);
-    test.insert(4);
-    test.insert(7);
-    test.insert(2);
-    test.insert(5);
-    test.print();
-    std::cout << "test:" << std::endl;
 
-    set test1;
-    test1.insert(7);
-    test1.insert(5);
-    test1.insert(7);
-    test1.insert(3);
-
-    test1.insert(1);
-    
-    test1.print();
-    std::cout << "test:" << std::endl << std::endl;
-    set tmp = interseption(test, test1);
-    std::cout << "res:" << std::endl;
-    tmp.print();
-
-    tmp = difference(test, test1);
-    std::cout << "res:" << std::endl;
-    tmp.print();
+size_t lcg() {
+    static size_t x = 0;
+    x = (1021 * x + 24631) % 116640;
+    return x;
 }
+
+#include <algorithm>
+#include <chrono>
+#include <iostream>
+#include<vector>
+using namespace std::chrono;
+
+
 void main()
 {
     //test();
