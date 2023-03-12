@@ -115,6 +115,48 @@ size_t lcg() {
 #include<vector>
 using namespace std::chrono;
 
+void testInsertMySet(int numb, int rep)
+{
+    set test;
+    int res = 0;
+    for (int j = 0; j < rep; j++)
+    {
+        auto start = high_resolution_clock::now();
+        for (int i = 0; i < numb; i++)
+        {
+            test.insert(lcg());
+        }
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        //std::cout << "Time taken by function: "
+        //    << duration.count() << " microseconds" << std::endl;
+        res += duration.count();
+    }
+    std::cout << "Time of INSERTS for " << rep << " times: " << (double)res / rep << std::endl;
+}
+
+void testContainsMySet(int numb, int rep)
+{
+    set test;
+    for (int i = 0; i < numb; i++)
+    {
+        test.insert(lcg());
+    }
+    int res = 0;
+    for (int j = 0; j < rep; j++)
+    {
+        auto start = high_resolution_clock::now();
+        test.contains(lcg());
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        //std::cout << "Time taken by function: "
+        //    << duration.count() << " microseconds" << std::endl;
+        res += duration.count();
+    }
+    std::cout << "Time of IS_CONTAINS for " << rep << " times: " << (double)res / rep << std::endl;
+}
+
+
 
 void main()
 {
