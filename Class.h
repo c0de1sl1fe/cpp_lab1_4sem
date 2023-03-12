@@ -5,20 +5,22 @@
 #include <limits>
 #include <vector>
 
+struct Node
+{
+	int data;
+	Node* left;
+	Node* right;
+	Node(int value = 0)
+	{
+		data = value;
+		left = right = NULL;
+	}
+};
+
 class set
 {
 private:
-	struct Node
-	{
-		int data;
-		Node* left; 
-		Node* right;
-		Node(int value = 0)
-		{
-			data = value;
-			left = right = NULL;
-		}
-	};
+
 	Node* root_;
 
 	//Node* insert_(Node* root, int value)
@@ -110,7 +112,7 @@ private:
 		delete root;
 		root = NULL;
 	}
-	void print_(const std::string& prefix, const Node* node, bool isLeft)
+	void print_(const std::string& prefix, const Node* node, bool isLeft) const
 	{
 		if (node != nullptr)
 		{
@@ -136,7 +138,7 @@ private:
 		copy_(dst->right, src->right);		
 	}
 
-	Node* contains_(Node* root, int value)
+	Node* contains_(Node* root, int value) const
 	{
 		while (root != NULL && root->data != value) {
 			if (value == root->data) {
@@ -173,12 +175,17 @@ public:
 	set(const set& a);
 	~set();
 	set& operator=(const set& src);
-	void print();
+	void print() const;
 	bool insert(int key);
-	bool contains(int key);
+	bool contains(int key) const;
 	bool erase(int key);
-
+	Node* getRoot() const;
 };
+Node* set::getRoot() const
+{
+	return root_;
+}
+
 set::set()
 {
 	root_ = NULL;
@@ -203,7 +210,7 @@ set& set::operator=(const set& src)
 	copy_(root_, src.root_);
 	return *this;
 }
-void set::print()
+void set::print() const
 {
 	print_("", root_, false);
 }
@@ -213,7 +220,7 @@ bool set::insert(int key)
 	return insert_(root_, key);
 }
 
-bool set::contains(int key)
+bool set::contains(int key) const
 {
 	return contains_(root_, key) ? true : false;
 }
