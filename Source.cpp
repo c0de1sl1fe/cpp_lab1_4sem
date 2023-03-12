@@ -115,7 +115,7 @@ size_t lcg() {
 #include<vector>
 using namespace std::chrono;
 
-void testInsertMySet(int numb, int rep)
+void testFILLMySet(int numb, int rep)
 {
     set test;
     int res = 0;
@@ -132,7 +132,7 @@ void testInsertMySet(int numb, int rep)
         //    << duration.count() << " microseconds" << std::endl;
         res += duration.count();
     }
-    std::cout << "Time of INSERTS for " << rep << " times: " << (double)res / rep << std::endl;
+    std::cout << "Time of FILL for " << numb << " for " << rep << " times: " << (double)res / rep << std::endl;
 }
 
 void testContainsMySet(int numb, int rep)
@@ -153,7 +153,51 @@ void testContainsMySet(int numb, int rep)
         //    << duration.count() << " microseconds" << std::endl;
         res += duration.count();
     }
-    std::cout << "Time of IS_CONTAINS for " << rep << " times: " << (double)res / rep << std::endl;
+    std::cout << "Time of IS_CONTAINS for " << numb << " for " << rep << " times: " << (double)res / rep << std::endl;
+}
+
+void testInsertMySet(int numb, int rep)
+{
+    set test;
+    for (int i = 0; i < numb; i++)
+    {
+        test.insert(lcg());
+    }
+    int res = 0;
+    for (int j = 0; j < rep; j++)
+    {
+        set tmp = test;
+        auto start = high_resolution_clock::now();
+        tmp.insert(lcg());
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        //std::cout << "Time taken by function: "
+        //    << duration.count() << " microseconds" << std::endl;
+        res += duration.count();
+    }
+    std::cout << "Time of INSERT for " << numb << " for " << rep << " times: " << (double)res / rep << std::endl;
+}
+
+void testEraseMySet(int numb, int rep)
+{
+    set test;
+    for (int i = 0; i < numb; i++)
+    {
+        test.insert(lcg());
+    }
+    int res = 0;
+    for (int j = 0; j < rep; j++)
+    {
+        set tmp = test;
+        auto start = high_resolution_clock::now();
+        tmp.erase(lcg());
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        //std::cout << "Time taken by function: "
+        //    << duration.count() << " microseconds" << std::endl;
+        res += duration.count();
+    }
+    std::cout << "Time of ERASE for " << numb << " for " << rep << " times: " << (double)res / rep << std::endl;
 }
 
 
@@ -266,6 +310,7 @@ void main()
         }
         case(5):
             std::cout << "Bye!" << std::endl;
+
             exit = true;
             break;
 
