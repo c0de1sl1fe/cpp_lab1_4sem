@@ -72,7 +72,7 @@ private:
 		}
 		if (root->data > value)
 		{
-			return (root->left, value);
+			return insert_(root->left, value);
 		}
 		else
 		{

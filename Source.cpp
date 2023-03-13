@@ -117,10 +117,11 @@ using namespace std::chrono;
 
 void testFILLMySet(int numb, int rep)
 {
+    set test;
     int res = 0;
     for (int j = 0; j < rep; j++)
     {
-        set test;
+        
         auto start = high_resolution_clock::now();
         for (int i = 0; i < numb; i++)
         {
@@ -285,7 +286,7 @@ void testEraseVector(int numb, int rep)
         //    << duration.count() << " microseconds" << std::endl;
         res += duration.count();
     }
-    std::cout << "Time of ERASE for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
+    std::cout << "Time of ERASE vector for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
 }
 
 
@@ -308,13 +309,12 @@ void main()
             key = EnterNumber();
             if (tree.insert(key))
             {
-                std::cout << "uccessfully inserted" << std::endl;
+                std::cout << "successfully inserted" << std::endl;
             }
             else
             {
                 std::cout << "something went wrong" << std::endl;
             }
-
             tree.print();
             system("pause");
             break;
