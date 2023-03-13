@@ -199,7 +199,94 @@ void testEraseMySet(int numb, int rep)
     }
     std::cout << "Time of ERASE for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
 }
+void testFILLVector(int numb, int rep)
+{
 
+    int res = 0;
+    for (int j = 0; j < rep; j++)
+    {
+        std::vector<int> test(numb);
+        auto start = high_resolution_clock::now();
+        for (int i = 0; i < numb; i++)
+        {
+            test.push_back(lcg());
+        }
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        //std::cout << "Time taken by function: "
+        //    << duration.count() << " microseconds" << std::endl;
+        res += duration.count();
+    }
+    std::cout << "Time of FILL vector for " << numb << " for " << rep << " times: " << (double)res / rep << " microseconds" << std::endl;
+}
+
+void testContainsVector(int numb, int rep)
+{
+    std::vector<int> test(numb);
+    for (int i = 0; i < numb; i++)
+    {
+        test.push_back(lcg());
+    }
+    long double res = 0;
+    for (int j = 0; j < rep; j++)
+    {
+        auto start = high_resolution_clock::now();
+        std::find(test.begin(), test.end(), lcg());
+        //test.contains(lcg());
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<nanoseconds>(stop - start);
+        //std::cout << "Time taken by function: "
+        //    << duration.count() << " microseconds" << std::endl;
+        res += duration.count();
+    }
+    std::cout << "Time of IS_CONTAINS vector for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
+}
+
+void testInsertVector(int numb, int rep)
+{
+    std::vector<int> test(numb);
+    for (int i = 0; i < numb; i++)
+    {
+        test.push_back(lcg());
+    }
+    int res = 0;
+    for (int j = 0; j < rep; j++)
+    {
+        std::vector<int> tmp = test;
+        auto start = high_resolution_clock::now();
+        tmp.push_back(lcg());
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<nanoseconds>(stop - start);
+        //std::cout << "Time taken by function: "
+        //    << duration.count() << " microseconds" << std::endl;
+        res += duration.count();
+    }
+    std::cout << "Time of INSERT vector for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
+}
+
+void testEraseVector(int numb, int rep)
+{
+    std::vector<int> test(numb);
+    for (int i = 0; i < numb; i++)
+    {
+        test.push_back(lcg());
+    }
+    int res = 0;
+    for (int j = 0; j < rep; j++)
+    {
+        std::vector<int> tmp = test;
+        auto start = high_resolution_clock::now();
+
+        tmp.erase(std::remove(tmp.begin(), tmp.end(), 8), tmp.end());
+
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<nanoseconds>(stop - start);
+        //std::cout << "Time taken by function: "
+        //    << duration.count() << " microseconds" << std::endl;
+        res += duration.count();
+    }
+    std::cout << "Time of ERASE for " << numb << " for " << rep << " times: " << (double)res / rep << " nanoseconds" << std::endl;
+}
 
 
 void main()
@@ -331,6 +418,31 @@ void main()
             testEraseMySet(1000, 1000);
             testEraseMySet(10000, 1000);
             testEraseMySet(100000, 1000);
+
+            std::cout << std::endl;
+            std::cout << std::endl;
+
+            testFILLVector(1000, 100);
+            testFILLVector(10000, 100);
+            testFILLVector(100000, 100);
+
+            std::cout << std::endl;
+
+            testContainsVector(1000, 1000);
+            testContainsVector(10000, 1000);
+            testContainsVector(100000, 1000);
+
+            std::cout << std::endl;
+
+            testInsertVector(1000, 1000);
+            testInsertVector(10000, 1000);
+            testInsertVector(100000, 1000);
+
+            std::cout << std::endl;
+
+            testEraseVector(1000, 1000);
+            testEraseVector(10000, 1000);
+            testEraseVector(100000, 1000);
 
             exit = true;
             break;
