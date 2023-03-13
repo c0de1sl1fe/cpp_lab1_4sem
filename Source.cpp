@@ -290,7 +290,7 @@ void testEraseVector(int numb, int rep)
 }
 
 
-void main()
+int main()
 {
     //test();
     set tree;
@@ -452,4 +452,5 @@ void main()
             break;
         }
     }
+    return 1;
 }
