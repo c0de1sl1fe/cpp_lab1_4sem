@@ -278,7 +278,7 @@ void testEraseVector(int numb, int rep)
         std::vector<int> tmp = test;
         auto start = high_resolution_clock::now();
 
-        tmp.erase(std::remove(tmp.begin(), tmp.end(), 8), tmp.end());
+        tmp.erase(std::remove(tmp.begin(), tmp.end(), lcg()), tmp.end());
 
         auto stop = high_resolution_clock::now();
         auto duration = duration_cast<nanoseconds>(stop - start);
