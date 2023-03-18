@@ -117,11 +117,11 @@ using namespace std::chrono;
 
 void testFILLMySet(int numb, int rep)
 {
-    set test;
+  
     int res = 0;
     for (int j = 0; j < rep; j++)
     {
-        
+        set test;
         auto start = high_resolution_clock::now();
         for (int i = 0; i < numb; i++)
         {
