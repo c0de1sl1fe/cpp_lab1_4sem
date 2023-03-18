@@ -194,7 +194,7 @@ bool set::erase(int key)
 	{
 		return false;
 	}
-	erase_(root_, key);
+	root_ = erase_(root_, key);
 	return true;
 }
 
