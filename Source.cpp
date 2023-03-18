@@ -339,19 +339,18 @@ int main()
         }
         case(3):
         {
-            tree.print();
             std::cout << std::endl;
             std::cout << "Let's erase: ";
             int key = EnterNumber();
             if (tree.erase(key))
             {
-                std::cout << "uccessfully erased" << std::endl;
+                std::cout << "successfully erased" << std::endl;
             }
             else
             {
                 std::cout << "something went wrong" << std::endl;
             }
-
+            
             tree.print();
             system("pause");
 
