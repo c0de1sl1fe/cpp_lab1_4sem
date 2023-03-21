@@ -10,76 +10,194 @@ struct Node
 	int data;
 	Node* left;
 	Node* right;
+	unsigned char height;
 	Node(int value = 0)
 	{
 		data = value;
 		left = right = NULL;
+		height = 1;
 	}
 };
 
 class set
 {
 private:
-
 	Node* root_;
+
+	unsigned char height(Node* p)
+	{
+		return p ? p->height : 0;
+	}
+
+	int bfactor(Node* p)
+	{
+		return height(p->right) - height(p->left);
+	}
+
+	void fixheight(Node* p)
+	{
+		unsigned char hl = height(p->left);
+		unsigned char hr = height(p->right);
+		p->height = (hl > hr ? hl : hr) + 1;
+	}
+
+	Node* rotateright(Node* p) // правый поворот вокруг p
+	{
+		Node* q = p->left;
+		p->left = q->right;
+		q->right = p;
+		fixheight(p);
+		fixheight(q);
+		return q;
+	}
+
+	Node* rotateleft(Node* q) // левый поворот вокруг q
+	{
+		Node* p = q->right;
+		q->right = p->left;
+		p->left = q;
+		fixheight(q);
+		fixheight(p);
+		return p;
+	}
+	Node* balance(Node* p) // балансировка узла p
+	{
+		fixheight(p);
+		if (bfactor(p) == 2)
+		{
+			if (bfactor(p->right) < 0)
+				p->right = rotateright(p->right);
+			return rotateleft(p);
+		}
+		if (bfactor(p) == -2)
+		{
+			if (bfactor(p->left) > 0)
+				p->left = rotateleft(p->left);
+			return rotateright(p);
+		}
+		return p; // балансировка не нужна
+	}
+
+
+
+	
+
+	Node* findmin(Node* root) // поиск узла с минимальным ключом в дереве p 
+	{
+		return root->left ? findmin(root->left) : root;
+	}
+	Node* removemin(Node* root) // удаление узла с минимальным ключом из дерева p
+	{
+		if (root->left == 0)
+			return root->right;
+		root->left = removemin(root->left);
+		return balance(root);
+	}
+	Node* balanced_(Node* root)
+	{
+		if (!root)
+		{
+			return NULL;
+		}
+		root = balance(root);
+		root->left = balanced_(root->left);
+		root->right = balanced_(root->right);
+		return balance(root);
+	}
+
 	Node* FindMin_(Node* root)
 	{
 		while (root->left != NULL) root = root->left;
 		return root;
 	}
 
-	Node* erase_(Node* root, int key) {
-		if (root == NULL) return root;
-		else if (key < root->data) root->left = erase_(root->left, key);
-		else if (key > root->data) root->right = erase_(root->right, key);
-		else {
-			// Case 1:  No child
-			if (root->left == NULL && root->right == NULL) {
-				delete root;
-				root = NULL;
-			}
-			//Case 2: One child 
-			else if (root->left == NULL) {
-				struct Node* temp = root;
-				root = root->right;
-				delete temp;
-			}
-			else if (root->right == NULL) {
-				struct Node* temp = root;
-				root = root->left;
-				delete temp;
-			}
-			// case 3: 2 children
-			else {
-				struct Node* temp = FindMin_(root->right);
-				root->data = temp->data;
-				root->right = erase_(root->right, temp->data);
-			}
-		}
-		return root;
-	}
-	bool insert_(Node*& root, int value)
+	//Node* erase_(Node* root, int key) {
+	//	if (root == NULL) return root;
+	//	else if (key < root->data) root->left = erase_(root->left, key);
+	//	else if (key > root->data) root->right = erase_(root->right, key);
+	//	else {
+	//		// Case 1:  No child
+	//		if (root->left == NULL && root->right == NULL) {
+	//			delete root;
+	//			root = NULL;
+	//		}
+	//		//Case 2: One child 
+	//		else if (root->left == NULL) {
+	//			struct Node* temp = root;
+	//			root = root->right;
+	//			delete temp;
+	//		}
+	//		else if (root->right == NULL) {
+	//			struct Node* temp = root;
+	//			root = root->left;
+	//			delete temp;
+	//		}
+	//		// case 3: 2 children
+	//		else {
+	//			struct Node* temp = FindMin_(root->right);
+	//			root->data = temp->data;
+	//			root->right = erase_(root->right, temp->data);
+	//		}
+	//	}
+	//	return root;
+	//}
+	Node* erase_(Node* root, int key) // удаление ключа k из дерева p
 	{
-		if (!root)
+		if (!root) return 0;
+		if (key < root->data)
+			root->left = erase_(root->left, key);
+		else if (key > root->data)
+			root->right = erase_(root->right, key);
+		else //  k == p->key 
 		{
-			root = new Node(value);
-			return true;
+			Node* q = root->left;
+			Node* r = root->right;
+			delete root;
+			if (!r) return q;
+			Node* min = findmin(r);
+			min->right = removemin(r);
+			min->left = q;
+			return balance(min);
 		}
-
-		if (root->data == value)
-		{
-			return false;
-		}
-		if (root->data > value)
-		{
-			return insert_(root->left, value);
-		}
-		else
-		{
-			return insert_(root->right, value);
-		}
-
+		return balance(root);
 	}
+
+	//bool insert_(Node*& root, int value)
+	//{
+	//	if (!root)
+	//	{
+	//		root = new Node(value);
+	//		return true;
+	//	}
+	//	if (root->data == value)
+	//	{
+	//		return false;
+	//	}
+	//	if (root->data > value)
+	//	{
+	//		return insert_(root->left, value);
+	//	}
+	//	else
+	//	{
+	//		return insert_(root->right, value);
+	//	}
+	//}
+
+	Node* insert_(Node*& root, int k) // вставка ключа k в дерево с корнем p
+	{
+		if (!root) return new Node(k);
+		if (k == root->data)
+		{
+			return NULL;
+		}
+		if (k < root->data)
+			root->left = insert_(root->left, k);
+		else
+			root->right = insert_(root->right, k);
+		return balance(root);
+	}
+
+	
 	void clear_(Node*& root)
 	{
 		if (!root)
@@ -142,6 +260,7 @@ public:
 	bool contains(int key) const;
 	bool erase(int key);
 	Node* const getRoot() const;
+
 };
 Node* const set::getRoot() const
 {
@@ -179,7 +298,12 @@ void set::print() const
 
 bool set::insert(int key)
 {
-	return insert_(root_, key);
+	if (contains_(root_, key))
+		return false;
+	root_ = insert_(root_, key);
+	return true;
+	//return insert_(root_, key);
+	
 }
 
 bool set::contains(int key) const

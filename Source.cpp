@@ -304,18 +304,38 @@ int main()
         {
         case(1):
         {
-            int key;
-            std::cout << "Let's enter number: ";
-            key = EnterNumber();
-            if (tree.insert(key))
-            {
-                std::cout << "successfully inserted" << std::endl;
-            }
-            else
-            {
-                std::cout << "something went wrong" << std::endl;
-            }
+            tree.insert(1);
             tree.print();
+            std::cout << "----------------------------------------" << std::endl;
+            tree.insert(2);
+            tree.print();
+            std::cout << "----------------------------------------" << std::endl;
+            tree.insert(3);
+            tree.print();
+            std::cout << "----------------------------------------" << std::endl;
+            tree.insert(4);
+            tree.print();
+            tree.insert(5);
+            std::cout << "----------------------------------------" << std::endl;
+            tree.print();
+            tree.insert(6);
+            std::cout << "----------------------------------------" << std::endl;
+
+           
+            std::cout << std::endl;
+            tree.print();
+            //int key;
+            //std::cout << "Let's enter number: ";
+            //key = EnterNumber();
+            //if (tree.insert(key))
+            //{
+            //    std::cout << "successfully inserted" << std::endl;
+            //}
+            //else
+            //{
+            //    std::cout << "something went wrong" << std::endl;
+            //}
+            //tree.print();
             system("pause");
             break;
         }
