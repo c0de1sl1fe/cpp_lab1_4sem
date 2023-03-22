@@ -51,7 +51,7 @@ private:
 		return q;
 	}
 
-	Node* rotateleft(Node* q) 
+	Node* rotateleft(Node* q) // левый поворот вокруг q
 	{
 		Node* p = q->right;
 		q->right = p->left;
@@ -60,7 +60,7 @@ private:
 		fixheight(p);
 		return p;
 	}
-	Node* balance(Node* p) 
+	Node* balance(Node* p) // балансировка узла p
 	{
 		fixheight(p);
 		if (bfactor(p) == 2)
@@ -75,18 +75,18 @@ private:
 				p->left = rotateleft(p->left);
 			return rotateright(p);
 		}
-		return p; 
+		return p; // балансировка не нужна
 	}
 
 
 
-	
 
-	Node* findmin(Node* root) 
+
+	Node* findmin(Node* root) // поиск узла с минимальным ключом в дереве p 
 	{
 		return root->left ? findmin(root->left) : root;
 	}
-	Node* removemin(Node* root) 
+	Node* removemin(Node* root) // удаление узла с минимальным ключом из дерева p
 	{
 		if (root->left == 0)
 			return root->right;
@@ -111,58 +111,37 @@ private:
 		return root;
 	}
 
-	//Node* erase_(Node* root, int key) {
-	//	if (root == NULL) return root;
-	//	else if (key < root->data) root->left = erase_(root->left, key);
-	//	else if (key > root->data) root->right = erase_(root->right, key);
-	//	else {
-	//		// Case 1:  No child
-	//		if (root->left == NULL && root->right == NULL) {
-	//			delete root;
-	//			root = NULL;
-	//		}
-	//		//Case 2: One child 
-	//		else if (root->left == NULL) {
-	//			struct Node* temp = root;
-	//			root = root->right;
-	//			delete temp;
-	//		}
-	//		else if (root->right == NULL) {
-	//			struct Node* temp = root;
-	//			root = root->left;
-	//			delete temp;
-	//		}
-	//		// case 3: 2 children
-	//		else {
-	//			struct Node* temp = FindMin_(root->right);
-	//			root->data = temp->data;
-	//			root->right = erase_(root->right, temp->data);
-	//		}
-	//	}
-	//	return root;
-	//}
-	Node* erase_(Node* root, int key) // удаление ключа k из дерева p
-	{
-		if (!root) return 0;
-		if (key < root->data)
-			root->left = erase_(root->left, key);
-		else if (key > root->data)
-			root->right = erase_(root->right, key);
-		else //  k == p->key 
-		{
-			Node* q = root->left;
-			Node* r = root->right;
-			delete root;
-			if (!r) return q;
-			Node* min = findmin(r);
-			min->right = removemin(r);
-			min->left = q;
-			return balance(min);
+	Node* erase_(Node* root, int key) {
+		if (root == NULL) return root;
+		else if (key < root->data) root->left = erase_(root->left, key);
+		else if (key > root->data) root->right = erase_(root->right, key);
+		else {
+			// Case 1:  No child
+			if (root->left == NULL && root->right == NULL) {
+				delete root;
+				root = NULL;
+			}
+			//Case 2: One child 
+			else if (root->left == NULL) {
+				struct Node* temp = root;
+				root = root->right;
+				delete temp;
+			}
+			else if (root->right == NULL) {
+				struct Node* temp = root;
+				root = root->left;
+				delete temp;
+			}
+			// case 3: 2 children
+			else {
+				struct Node* temp = FindMin_(root->right);
+				root->data = temp->data;
+				root->right = erase_(root->right, temp->data);
+			}
 		}
-		return balance(root);
+		return root;
 	}
-
-	//bool insert_(Node*& root, int value)
+	//Node* erase_(Node* root, int key) // erase for AVL
 	//{
 	//	if (!root) return 0;
 	//	if (key < root->data)
@@ -183,10 +162,18 @@ private:
 	//	return balance(root);
 	//}
 
-	Node* insert_(Node*& root, int k) // вставка ключа k в дерево с корнем p
+	bool insert_(Node*& root, int value)
 	{
-		if (!root) return new Node(k);
-		if (k == root->data)
+		if (!root)
+		{
+			root = new Node(value);
+			return true;
+		}
+		if (root->data == value)
+		{
+			return false;
+		}
+		if (root->data > value)
 		{
 			return insert_(root->left, value);
 		}
@@ -210,7 +197,7 @@ private:
 	//	return balance(root);
 	//}
 
-	
+
 	void clear_(Node*& root)
 	{
 		if (!root)
@@ -245,7 +232,7 @@ private:
 		}
 		dst = new Node(src->data);
 		copy_(dst->left, src->left);
-		copy_(dst->right, src->right);		
+		copy_(dst->right, src->right);
 	}
 	Node* contains_(Node* root, int value) const
 	{
@@ -262,7 +249,7 @@ private:
 		}
 		return root;
 	}
-	
+
 public:
 	set();
 	set(const set& a);
@@ -294,6 +281,7 @@ set::~set()
 {
 	clear_(root_);
 }
+
 set& set::operator=(const set& src)
 {
 	if (this == (&src)) { return *this; }
@@ -316,7 +304,7 @@ bool set::insert(int key)
 	//root_ = insert_(root_, key);
 	//return true;
 	return insert_(root_, key);
-	
+
 }
 
 bool set::contains(int key) const
