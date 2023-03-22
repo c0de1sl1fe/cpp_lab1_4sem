@@ -51,7 +51,7 @@ private:
 		return q;
 	}
 
-	Node* rotateleft(Node* q) // левый поворот вокруг q
+	Node* rotateleft(Node* q) 
 	{
 		Node* p = q->right;
 		q->right = p->left;
@@ -60,7 +60,7 @@ private:
 		fixheight(p);
 		return p;
 	}
-	Node* balance(Node* p) // балансировка узла p
+	Node* balance(Node* p) 
 	{
 		fixheight(p);
 		if (bfactor(p) == 2)
@@ -75,18 +75,18 @@ private:
 				p->left = rotateleft(p->left);
 			return rotateright(p);
 		}
-		return p; // балансировка не нужна
+		return p; 
 	}
 
 
 
 	
 
-	Node* findmin(Node* root) // поиск узла с минимальным ключом в дереве p 
+	Node* findmin(Node* root) 
 	{
 		return root->left ? findmin(root->left) : root;
 	}
-	Node* removemin(Node* root) // удаление узла с минимальным ключом из дерева p
+	Node* removemin(Node* root) 
 	{
 		if (root->left == 0)
 			return root->right;
@@ -141,7 +141,7 @@ private:
 	//	}
 	//	return root;
 	//}
-	Node* erase_(Node* root, int key) // удаление ключа k из дерева p
+	Node* erase_(Node* root, int key) // erase AVL
 	{
 		if (!root) return 0;
 		if (key < root->data)
@@ -183,7 +183,7 @@ private:
 	//	}
 	//}
 
-	Node* insert_(Node*& root, int k) // вставка ключа k в дерево с корнем p
+	Node* insert_(Node*& root, int k) // insert to AVL
 	{
 		if (!root) return new Node(k);
 		if (k == root->data)

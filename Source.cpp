@@ -304,6 +304,7 @@ int main()
         {
         case(1):
         {
+            // special for test ABL balanced tree
             tree.insert(1);
             tree.print();
             std::cout << "----------------------------------------" << std::endl;
