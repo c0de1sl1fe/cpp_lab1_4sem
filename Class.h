@@ -298,11 +298,11 @@ void set::print() const
 
 bool set::insert(int key)
 {
-	if (contains_(root_, key))
-		return false;
-	root_ = insert_(root_, key);
-	return true;
-	//return insert_(root_, key);
+	//if (contains_(root_, key))
+	//	return false;
+	//root_ = insert_(root_, key);
+	//return true;
+	return insert_(root_, key);
 	
 }
 
