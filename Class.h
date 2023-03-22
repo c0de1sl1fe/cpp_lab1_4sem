@@ -111,35 +111,6 @@ private:
 		return root;
 	}
 
-<<<<<<< HEAD
-	Node* erase_(Node* root, int key) {
-		if (root == NULL) return root;
-		else if (key < root->data) root->left = erase_(root->left, key);
-		else if (key > root->data) root->right = erase_(root->right, key);
-		else {
-			// Case 1:  No child
-			if (root->left == NULL && root->right == NULL) {
-				delete root;
-				root = NULL;
-			}
-			//Case 2: One child 
-			else if (root->left == NULL) {
-				struct Node* temp = root;
-				root = root->right;
-				delete temp;
-			}
-			else if (root->right == NULL) {
-				struct Node* temp = root;
-				root = root->left;
-				delete temp;
-			}
-			// case 3: 2 children
-			else {
-				struct Node* temp = FindMin_(root->right);
-				root->data = temp->data;
-				root->right = erase_(root->right, temp->data);
-			}
-=======
 	//Node* erase_(Node* root, int key) {
 	//	if (root == NULL) return root;
 	//	else if (key < root->data) root->left = erase_(root->left, key);
@@ -170,7 +141,7 @@ private:
 	//	}
 	//	return root;
 	//}
-	Node* erase_(Node* root, int key) // erase AVL
+	Node* erase_(Node* root, int key) // удаление ключа k из дерева p
 	{
 		if (!root) return 0;
 		if (key < root->data)
@@ -187,11 +158,11 @@ private:
 			min->right = removemin(r);
 			min->left = q;
 			return balance(min);
->>>>>>> c46736308c9eee118f9cb77cddd798bc35047766
 		}
-		return root;
+		return balance(root);
 	}
-	//Node* erase_(Node* root, int key) // erase for AVL
+
+	//bool insert_(Node*& root, int value)
 	//{
 	//	if (!root) return 0;
 	//	if (key < root->data)
@@ -212,22 +183,10 @@ private:
 	//	return balance(root);
 	//}
 
-<<<<<<< HEAD
-	bool insert_(Node*& root, int value)
-=======
-	Node* insert_(Node*& root, int k) // insert to AVL
->>>>>>> c46736308c9eee118f9cb77cddd798bc35047766
+	Node* insert_(Node*& root, int k) // вставка ключа k в дерево с корнем p
 	{
-		if (!root)
-		{
-			root = new Node(value);
-			return true;
-		}
-		if (root->data == value)
-		{
-			return false;
-		}
-		if (root->data > value)
+		if (!root) return new Node(k);
+		if (k == root->data)
 		{
 			return insert_(root->left, value);
 		}
