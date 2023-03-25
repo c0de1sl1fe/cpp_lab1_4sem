@@ -285,10 +285,11 @@ set::~set()
 set& set::operator=(const set& src)
 {
 	if (this == (&src)) { return *this; }
-	if (!src.root_)
-	{
-		clear_(root_);
-	}
+	//if (!src.root_)
+	//{
+	//	clear_(root_);
+	//}
+	clear_(root_);
 	copy_(root_, src.root_);
 	return *this;
 }
